@@ -20,13 +20,21 @@ namespace AdventOfCode.Day2
             var countOfValidPasswords = 0;
             foreach (var inputLine in inputLines)
             {
-                var regex =
-                    new Regex($"[{inputLine.RepeatingLetter}]");
+                var passwordSplit = inputLine.Password.ToCharArray();
 
-                var matches = regex.Matches(inputLine.Password);
+                var firstPosition = passwordSplit[inputLine.FirstPosition - 1].ToString();
+                var secondPosition = passwordSplit[inputLine.SecondPosition - 1].ToString();
 
-                var isValidPassword =
-                    inputLine.MaxOccurrence >= matches.Count && matches.Count >= inputLine.MinOccurrence;
+                bool isValidPassword;
+                if (firstPosition == inputLine.RepeatingLetter && secondPosition == inputLine.RepeatingLetter ||
+                    firstPosition != inputLine.RepeatingLetter && secondPosition != inputLine.RepeatingLetter)
+                {
+                    isValidPassword = false;
+                }
+                else
+                {
+                    isValidPassword = true;
+                }
 
                 Console.WriteLine($"{isValidPassword} for {inputLine.Password}");
                 countOfValidPasswords += isValidPassword ? 1 : 0;
@@ -48,8 +56,8 @@ namespace AdventOfCode.Day2
 
                 inputLines.Add(new InputLine
                                {
-                                   MinOccurrence = int.Parse(matches[0].Groups[1].Value),
-                                   MaxOccurrence = int.Parse(matches[0].Groups[2].Value),
+                                   FirstPosition = int.Parse(matches[0].Groups[1].Value),
+                                   SecondPosition = int.Parse(matches[0].Groups[2].Value),
                                    RepeatingLetter = matches[0].Groups[3].Value,
                                    Password = matches[0].Groups[4].Value
                                });
@@ -60,8 +68,8 @@ namespace AdventOfCode.Day2
 
         private class InputLine
         {
-            public int MinOccurrence { get; set; }
-            public int MaxOccurrence { get; set; }
+            public int FirstPosition { get; set; }
+            public int SecondPosition { get; set; }
             public string RepeatingLetter { get; set; }
             public string Password { get; set; }
         }
