@@ -6,8 +6,8 @@ namespace AdventOfCode
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Running Day1");
-            Day1.Day1.Run("./FinalInput.txt");
+            Console.WriteLine("Running Day2");
+            Day2.Day2.Run("FinalInput.txt");
             Console.ReadLine();
         }
     }
